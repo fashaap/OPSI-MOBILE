@@ -1,240 +1,384 @@
-import React from "react";
 import {
   View,
   Text,
-  StyleSheet,
-  TouchableOpacity,
   ScrollView,
+  StyleSheet,
+  Dimensions,
+  TouchableOpacity,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
+import React from "react";
 import { Avatar } from "@rneui/themed";
-import { MaterialIcons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
+import { FontAwesome6 } from "@expo/vector-icons";
 
-const truncateText = (text, maxLength) => {
-  if (text.length > maxLength) {
-    return text.substring(0, maxLength - 3) + "...";
-  }
-  return text;
-};
-
-const HomeScreen = () => {
-  const name = "FASHA AZHI PUTRA";
-  const truncatedName = truncateText(name, 20);
-
+const HomeScreen = ({ navigation }) => {
   return (
-    <ScrollView
-      contentContainerStyle={styles.scrollContainer}
-      showsVerticalScrollIndicator={false}
-    >
-      <View style={styles.container}>
-        <View style={styles.containerMorning}>
-          <Text style={styles.textMorning}>Selamat pagi</Text>
-          <Text style={styles.textMorningName}>Fasha Azhi Putra</Text>
+    <ScrollView contentContainerStyle={styles.container}>
+      <View
+        style={{
+          marginTop: 50,
+          paddingHorizontal: 20,
+          flexDirection: "row",
+          justifyContent: "space-between",
+        }}
+      >
+        <View>
+          <Text style={{ color: "#ffffff", fontWeight: "bold" }}>
+            Selamat Pagi
+          </Text>
+          <Text style={{ color: "#ffffff", fontSize: 15, fontWeight: "bold" }}>
+            FASHA AZHI PUTRA
+          </Text>
         </View>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            paddingHorizontal: 20,
-            marginTop: 20,
-          }}
-        >
-          <View style={{ marginRight: 10 }}>
-            <Text style={{ fontSize: 20, color: "#ffffff" }}>100</Text>
-            <Text
-              style={{
-                textTransform: "uppercase",
-                fontWeight: "bold",
-                fontSize: 20,
-                color: "#ffffff",
-              }}
-            >
-              DISPEN
-            </Text>
-          </View>
-          <View style={{ marginRight: 10 }}>
-            <Text style={{ fontSize: 20, color: "#ffffff" }}>100</Text>
-            <Text
-              style={{
-                textTransform: "uppercase",
-                fontWeight: "bold",
-                fontSize: 20,
-                color: "#ffffff",
-              }}
-            >
-              IZIN
-            </Text>
-          </View>
-          <View style={{ marginRight: 10 }}>
-            <Text style={{ fontSize: 20, color: "#ffffff" }}>100</Text>
-            <Text
-              style={{
-                textTransform: "uppercase",
-                fontWeight: "bold",
-                fontSize: 20,
-                color: "#ffffff",
-              }}
-            >
-              PULANG
-            </Text>
-          </View>
-          <View style={{ marginRight: 10 }}>
-            <Text style={{ fontSize: 20, color: "#ffffff" }}>100</Text>
-            <Text
-              style={{
-                textTransform: "uppercase",
-                fontWeight: "bold",
-                fontSize: 20,
-                color: "#ffffff",
-              }}
-            >
-              BOLOS
-            </Text>
-          </View>
+        <View>
+          <Text style={{ color: "#ffffff", fontSize: 15, fontWeight: "bold" }}>
+            15 Juni 2024
+          </Text>
         </View>
-
-        <View style={styles.oldCardContainer}>
-          <ScrollView
-            horizontal={true}
-            style={{ flexDirection: "row", gap: 12, marginBottom: 10 }}
-            showsHorizontalScrollIndicator={false}
-          >
-            <TouchableOpacity
-              style={{
-                padding: 10,
-                marginRight: 10,
-                borderRadius: 5,
-                backgroundColor: "#175d9e",
-              }}
-            >
-              <Text style={{ color: "#fff", fontSize: 17, fontWeight: "bold" }}>
-                List Guru MAPEL
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{
-                padding: 10,
-
-                marginRight: 10,
-                borderRadius: 5,
-                backgroundColor: "#175d9e",
-              }}
-            >
-              <Text style={{ color: "#fff", fontSize: 17, fontWeight: "bold" }}>
-                List Guru PIKET
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{
-                padding: 10,
-
-                marginRight: 10,
-                borderRadius: 5,
-                backgroundColor: "#175d9e",
-              }}
-            >
-              <Text style={{ color: "#fff", fontSize: 17, fontWeight: "bold" }}>
-                List Guru BK
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{
-                padding: 10,
-                marginRight: 10,
-                borderRadius: 5,
-                borderColor: "#ffffff",
-                backgroundColor: "#175d9e",
-              }}
-            >
-              <Text style={{ color: "#fff", fontSize: 17, fontWeight: "bold" }}>
-                List Penjaga Gerbang
-              </Text>
-            </TouchableOpacity>
-          </ScrollView>
-
-          <View
-            style={{
-              marginVertical: 10,
-              backgroundColor: "#175d9e",
-              padding: 10,
-              borderRadius: 5,
-            }}
-          >
+      </View>
+      <View style={styles.fullScreenView}>
+        <View style={styles.containerContent}>
+          {/* Card  */}
+          <View style={styles.cardContent}>
             <View
               style={{
                 flexDirection: "row",
+                justifyContent: "space-between",
                 alignItems: "center",
               }}
             >
-              <MaterialIcons
-                name="announcement"
-                size={24}
-                color="#fff"
-                style={{ marginRight: 5 }}
-              />
-              <Text
-                style={{
-                  color: "#fff",
-                  fontSize: 20,
-                  fontWeight: "bold",
-                  marginBottom: 5,
-                }}
+              <TouchableOpacity
+                style={{ flexDirection: "row", alignItems: "center" }}
               >
-                Pengumuman
-              </Text>
-            </View>
-            <View>
-              <Text style={{ color: "#fff", fontSize: 17 }}>
-                Kami mohon maaf atas ketidaknyamanannya. Aplikasi SIMIKA saat
-                ini sedang dalam tahap pengembangan dan belum sepenuhnya
-                optimal. Terima kasih atas pengertian dan kesabaran Anda.
-              </Text>
-            </View>
-          </View>
-        </View>
-
-        <View style={styles.newCardContainer}>
-          <LinearGradient
-            colors={["#134d83", "#1963a9", "#0e5291"]}
-            style={styles.card}
-          >
-            <Text style={styles.cardTitle}>KARTU SIMIKA</Text>
-            <View style={styles.containerCardContent}>
-              <Avatar
-                size={45}
-                rounded
-                source={{
-                  uri: "https://randomuser.me/api/portraits/men/36.jpg",
-                }}
-              />
-              <View style={styles.cardTitleNameAndClass}>
-                <Text style={styles.cardTitleName}>{truncatedName}</Text>
-                <Text style={styles.cardTitleName}>XI IPA 4</Text>
-              </View>
-              <View style={styles.badgeCode}>
-                <Text style={styles.badgeTextCode}>YYT</Text>
-              </View>
-            </View>
-            <View style={{ marginTop: 20 }}>
-              <Text style={styles.textId}>ID PENGGUNA: </Text>
+                <Avatar
+                  size={48}
+                  rounded
+                  source={{
+                    uri: "https://randomuser.me/api/portraits/men/36.jpg",
+                  }}
+                />
+                <View style={{ marginLeft: 15 }}>
+                  <Text
+                    style={{
+                      color: "#053f5e",
+                      fontWeight: "bold",
+                      fontSize: 20,
+                    }}
+                  >
+                    FASHA AZHI PUTRA
+                  </Text>
+                  <Text
+                    style={{
+                      color: "#053f5e",
+                      fontWeight: "bold",
+                      fontSize: 18,
+                    }}
+                  >
+                    XI IPA 4
+                  </Text>
+                </View>
+              </TouchableOpacity>
               <View
-                style={{ flexDirection: "row", alignItems: "center", gap: 5 }}
+                style={{
+                  backgroundColor: "#a8d1f7",
+                  borderRadius: 15,
+                  padding: 10,
+                }}
               >
-                <Text style={{ fontSize: 15, color: "#ffffff" }}>
+                <Text style={{ color: "#053f5e", fontWeight: "bold" }}>
+                  YYT
+                </Text>
+              </View>
+            </View>
+            <View style={{ marginTop: 25 }}>
+              <Text style={{ color: "#053f5e", fontWeight: "bold" }}>
+                ID Akun:
+              </Text>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <Text
+                  style={{ color: "#053f5e", fontWeight: "bold", fontSize: 15 }}
+                >
                   B3oFcYdRqVql78IX2RGU
                 </Text>
-                <View
+                <TouchableOpacity
                   style={{
-                    padding: 3,
+                    marginLeft: 5,
+                    padding: 5,
+                    backgroundColor: "#bfdaf3",
                     borderRadius: 5,
-                    backgroundColor: "#a7a7a77a",
                   }}
                 >
-                  <MaterialIcons name="copy-all" size={15} color="#ffffff" />
-                </View>
+                  <AntDesign name="copy1" size={10} color="#053f5e" />
+                </TouchableOpacity>
               </View>
             </View>
-          </LinearGradient>
+          </View>
+
+          {/* rekap izin keluar semester ini */}
+          <View style={{ marginTop: 25 }}>
+            <Text style={{ fontSize: 17, textAlign: "center" }}>
+              Rekap Izin Keluar Semester ini
+            </Text>
+            <View
+              style={{
+                flexDirection: "row",
+                marginTop: 10,
+                justifyContent: "space-between",
+              }}
+            >
+              <View
+                style={{
+                  borderWidth: 1,
+                  borderRadius: 5,
+                  borderColor: "#0D629A",
+                  paddingHorizontal: 10,
+                  paddingVertical: 5,
+                  width: "24%",
+                }}
+              >
+                <Text
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: 17,
+                    fontWeight: "bold",
+                    color: "#333333",
+                  }}
+                >
+                  Dispen
+                </Text>
+                <Text style={{ fontSize: 20, color: "#333333" }}>50</Text>
+                <View
+                  style={{
+                    marginTop: 5,
+                    height: 5,
+                    backgroundColor: "#0D629A",
+                    borderRadius: 5,
+                  }}
+                ></View>
+              </View>
+              <View
+                style={{
+                  borderWidth: 1,
+                  borderRadius: 5,
+                  borderColor: "#C0A101",
+                  paddingHorizontal: 10,
+                  paddingVertical: 5,
+                  width: "24%",
+                }}
+              >
+                <Text
+                  style={{ fontWeight: "bold", fontSize: 17, color: "#333333" }}
+                >
+                  Izin
+                </Text>
+                <Text style={{ fontSize: 20, color: "#333333" }}>50</Text>
+                <View
+                  style={{
+                    marginTop: 5,
+                    height: 5,
+                    backgroundColor: "#C0A101",
+                    borderRadius: 5,
+                  }}
+                ></View>
+              </View>
+              <View
+                style={{
+                  borderWidth: 1,
+                  borderRadius: 5,
+                  paddingHorizontal: 10,
+                  borderColor: "#C00101",
+                  paddingVertical: 5,
+                  width: "24%",
+                }}
+              >
+                <Text
+                  style={{ fontWeight: "bold", fontSize: 17, color: "#333333" }}
+                >
+                  Bolos
+                </Text>
+                <Text style={{ fontSize: 20, color: "#333333" }}>50</Text>
+                <View
+                  style={{
+                    marginTop: 5,
+                    height: 5,
+                    backgroundColor: "#C00101",
+                    borderRadius: 5,
+                  }}
+                ></View>
+              </View>
+              <View
+                style={{
+                  borderWidth: 1,
+                  borderRadius: 5,
+                  borderColor: "#16A34A",
+                  paddingHorizontal: 10,
+                  paddingVertical: 5,
+                  width: "24%",
+                }}
+              >
+                <Text
+                  style={{ fontWeight: "bold", fontSize: 17, color: "#333333" }}
+                >
+                  Pulang
+                </Text>
+                <Text style={{ fontSize: 20, color: "#333333" }}>50</Text>
+                <View
+                  style={{
+                    marginTop: 5,
+                    height: 5,
+                    backgroundColor: "#16A34A",
+                    borderRadius: 5,
+                  }}
+                ></View>
+              </View>
+            </View>
+          </View>
+
+          {/* List nama */}
+          <View style={{ marginTop: 45 }}>
+            <Text style={{ fontSize: 17, color: "#333333" }}>List Nama</Text>
+            <View
+              style={{
+                flexDirection: "row",
+                flexWrap: "wrap",
+                gap: 15,
+                marginTop: 10,
+              }}
+              TouchableOpacity
+            >
+              <TouchableOpacity
+                onPress={() => navigation.navigate("ListGuruMapel")}
+                style={{
+                  backgroundColor: "blue",
+                  paddingVertical: 15,
+                  width: "24%",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  borderRadius: 10,
+                  backgroundColor: "#fff",
+                  shadowColor: "#000",
+                  shadowOffset: {
+                    width: 0,
+                    height: 3,
+                  },
+                  shadowOpacity: 0.29,
+                  shadowRadius: 4.65,
+
+                  elevation: 7,
+                }}
+              >
+                <FontAwesome6 name="user-circle" size={30} color="#333333" />
+                <Text
+                  style={{
+                    color: "#333333",
+                    textAlign: "center",
+                    marginTop: 10,
+                  }}
+                >
+                  Guru Mapel
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                onPress={() => navigation.navigate("ListGuruBK")}
+                style={{
+                  backgroundColor: "blue",
+                  paddingVertical: 15,
+                  width: "24%",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  borderRadius: 10,
+                  backgroundColor: "#fff",
+                  shadowColor: "#000",
+                  shadowOffset: {
+                    width: 0,
+                    height: 3,
+                  },
+                  shadowOpacity: 0.29,
+                  shadowRadius: 4.65,
+
+                  elevation: 7,
+                }}
+              >
+                <FontAwesome6 name="user-circle" size={30} color="#222222" />
+                <Text
+                  style={{
+                    color: "#222222",
+                    textAlign: "center",
+                    marginTop: 10,
+                  }}
+                >
+                  Guru BK
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                onPress={() => navigation.navigate("ListGuruPiket")}
+                style={{
+                  backgroundColor: "blue",
+                  paddingVertical: 15,
+                  width: "24%",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  borderRadius: 10,
+                  backgroundColor: "#fff",
+                  shadowColor: "#000",
+                  shadowOffset: {
+                    width: 0,
+                    height: 3,
+                  },
+                  shadowOpacity: 0.29,
+                  shadowRadius: 4.65,
+
+                  elevation: 7,
+                }}
+              >
+                <FontAwesome6 name="user-circle" size={30} color="#222222" />
+                <Text
+                  style={{
+                    color: "#222222",
+                    textAlign: "center",
+                    marginTop: 10,
+                  }}
+                >
+                  Guru Piket
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                onPress={() => navigation.navigate("ListSecurity")}
+                style={{
+                  backgroundColor: "blue",
+                  paddingVertical: 15,
+                  width: "24%",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  borderRadius: 10,
+                  backgroundColor: "#fff",
+                  shadowColor: "#000",
+                  shadowOffset: {
+                    width: 0,
+                    height: 3,
+                  },
+                  shadowOpacity: 0.29,
+                  shadowRadius: 4.65,
+
+                  elevation: 7,
+                }}
+              >
+                <FontAwesome6 name="user-circle" size={30} color="#222222" />
+                <Text
+                  style={{
+                    color: "#222222",
+                    textAlign: "center",
+                    marginTop: 10,
+                  }}
+                >
+                  Satpam
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
         </View>
       </View>
     </ScrollView>
@@ -242,81 +386,40 @@ const HomeScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  containerMorning: { paddingTop: 60, paddingHorizontal: 20 },
-  textMorning: {
-    fontSize: 15,
-    color: "#fff",
-    textTransform: "uppercase",
-  },
-  textMorningName: {
-    fontSize: 20,
-    color: "#ffffff",
-    fontWeight: "bold",
-    textTransform: "uppercase",
-  },
   container: {
-    flex: 1,
-    backgroundColor: "#10497f",
-    position: "relative",
+    flexGrow: 1,
+    backgroundColor: "#053f5e",
   },
-  scrollContainer: {
-    paddingBottom: 200,
+  fullScreenView: {
+    backgroundColor: "#F7F8FA",
+    padding: 20,
+    minHeight: Dimensions.get("window").height * 0.8,
+    marginTop: (Dimensions.get("window").height * 1) / 5.5,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
   },
-  oldCardContainer: {
-    backgroundColor: "#e6eaef",
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
-    paddingTop: "27%",
-    height: "auto",
-    paddingHorizontal: 20,
-    marginTop: "25%",
+  containerContent: {
+    width: "100%",
+    height: "100%",
+    // borderWidth: 1,
+    transform: [{ translateY: -80 }],
   },
-  newCardContainer: {
-    position: "absolute",
-    top: "33%",
-    left: 0,
-    right: 0,
-    alignItems: "center",
+  cardContent: {
+    width: "100%",
+    borderRadius: 10,
+    backgroundColor: "#fff",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.29,
+    shadowRadius: 4.65,
+
+    elevation: 7,
+    paddingHorizontal: 15,
+    paddingVertical: 10,
   },
-  card: {
-    borderColor: "#ffffff",
-    borderWidth: 2,
-    borderRadius: 15,
-    width: "92%",
-    padding: 15,
-  },
-  cardTitle: {
-    fontSize: 17,
-    fontWeight: "500",
-    color: "#fff",
-    textAlign: "center",
-    marginBottom: 5,
-  },
-  cardTitleNameAndClass: {
-    marginTop: 3,
-    marginLeft: 10,
-    flex: 1,
-    alignContent: "left",
-  },
-  cardTitleName: {
-    fontSize: 17,
-    fontWeight: "bold",
-    color: "#fff",
-  },
-  containerCardContent: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  badgeCode: {
-    backgroundColor: "#c9c9c95d",
-    padding: 10,
-    borderRadius: 15,
-    marginLeft: 10,
-    alignItems: "center",
-    flexDirection: "row",
-  },
-  badgeTextCode: { color: "#fff", fontWeight: "bold" },
-  textId: { fontWeight: "600", color: "#fff" },
 });
 
 export default HomeScreen;

@@ -1,12 +1,12 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-const SettingScreen = () => {
+const ListSecurityScreen = () => {
   return (
     <View>
-      <Text>SettingScreen</Text>
+      <Text>ListSecurityScreen</Text>
     </View>
   )
 }
 
-export default SettingScreen
+export default ListSecurityScreen
