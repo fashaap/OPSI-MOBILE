@@ -13,11 +13,11 @@ import { CheckBox } from "@rneui/themed";
 import RNDateTimePicker from "@react-native-community/datetimepicker";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import ImagePicker from "../../components/ImagePicker";
-import { Button } from "react-native-elements";
 
 const FormScreen = () => {
   const [checked1, setChecked1] = useState(false);
   const [checked2, setChecked2] = useState(false);
+  const [checked3, setChecked3] = useState(false);
   const [date, setDate] = useState(() => {
     let today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -27,17 +27,29 @@ const FormScreen = () => {
   const [showPicker, setShowPicker] = useState(false);
   const [value, onChangeText] = useState("Alasan Saya Ingin Dispen...");
 
+  const formatDate = (date) => {
+    const options = { day: "2-digit", month: "long", year: "numeric" };
+    return date.toLocaleDateString("id-ID", options);
+  };
+
   const toggleCheckbox1 = () => {
     setChecked1(true);
     setChecked2(false);
+    setChecked3(false);
   };
 
   const toggleCheckbox2 = () => {
     setChecked1(false);
     setChecked2(true);
+    setChecked3(false);
+  };
+  const toggleCheckbox3 = () => {
+    setChecked1(false);
+    setChecked2(false);
+    setChecked3(true);
   };
 
-  const handleDateChange = (event, selectedDate) => {
+  const handleDateChange = (selectedDate) => {
     if (selectedDate) {
       setShowPicker(false);
       setDate(selectedDate);
@@ -58,8 +70,31 @@ const FormScreen = () => {
     return `${hours}:${minutes}`;
   };
 
+  const formatTimeToDB = (date) => {
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+
+    month = month < 10 ? `0${month}` : month;
+    day = day < 10 ? `0${day}` : day;
+    hours = hours < 10 ? `0${hours}` : hours;
+    minutes = minutes < 10 ? `0${minutes}` : minutes;
+
+    return `${year}-${month}-${day}T${hours}:${minutes}:00`;
+  };
+
   const handleFormSubmit = () => {
-    if (!checked1 && !checked2) {
+    const formData = {
+      jenisIzin: checked1 ? "Dispen" : checked2 ? "Izin" : "Izin Pulang",
+      waktuDibutuhkan: !checked3 ? formatTimeToDB(date) : null,
+      alasan: value,
+      tanggal: formatDate(date),
+      buktiKuat: "imageUri",
+    };
+
+    if (!checked1 && !checked2 && !checked3) {
       Alert.alert("Peringatan", "Pilih salah satu jenis (Dispen/Izin)");
     } else if (formatTime(date) === "00:00") {
       Alert.alert("Peringatan", "Isi form waktu yang dibutuhkan dengan benar");
@@ -74,7 +109,7 @@ const FormScreen = () => {
         {
           text: "Kirim",
           onPress: () => {
-            console.log("Formulir terkirim!");
+            console.log("Formulir terkirim!", formData);
           },
         },
       ]);
@@ -116,24 +151,40 @@ const FormScreen = () => {
               containerStyle={styles.checkBox}
               textStyle={styles.checkBoxText}
             />
+            <CheckBox
+              checked={checked3}
+              onPress={toggleCheckbox3}
+              title="Izin Pulang"
+              iconType="material-community"
+              checkedIcon="checkbox-marked-outline"
+              uncheckedIcon="checkbox-blank-outline"
+              checkedColor="#386A9E"
+              containerStyle={styles.checkBox}
+              textStyle={styles.checkBoxText}
+            />
           </View>
         </View>
-        <View>
-          <Text style={styles.textHeadingForm}>Waktu Yang Dibutuhkan</Text>
-          <TouchableOpacity onPress={showDatePicker} style={styles.timeButton}>
-            <Icon name="timer-outline" size={20} color="#386A9E" />
-            <Text style={styles.timeText}>{formatTime(date)}</Text>
-          </TouchableOpacity>
-          {showPicker && (
-            <RNDateTimePicker
-              value={date}
-              onChange={handleDateChange}
-              display={Platform.OS === "ios" ? "spinner" : "default"}
-              is24Hour={true}
-              mode="time"
-            />
-          )}
-        </View>
+        {!checked3 ? (
+          <View>
+            <Text style={styles.textHeadingForm}>Waktu Yang Dibutuhkan</Text>
+            <TouchableOpacity
+              onPress={showDatePicker}
+              style={styles.timeButton}
+            >
+              <Icon name="timer-outline" size={20} color="#386A9E" />
+              <Text style={styles.timeText}>{formatTime(date)}</Text>
+            </TouchableOpacity>
+            {showPicker && (
+              <RNDateTimePicker
+                value={date}
+                onChange={handleDateChange}
+                display={Platform.OS === "ios" ? "spinner" : "default"}
+                is24Hour={true}
+                mode="time"
+              />
+            )}
+          </View>
+        ) : null}
 
         <View>
           <Text style={styles.textHeadingForm}>Alasan Izin Keluar</Text>
@@ -148,7 +199,7 @@ const FormScreen = () => {
               editable
               multiline
               numberOfLines={4}
-              maxLength={40}
+              maxLength={100}
               onChangeText={(text) => onChangeText(text)}
               value={value}
               style={{ padding: 10 }}

@@ -1,8 +1,12 @@
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import React from "react";
 import { MaterialIcons } from "@expo/vector-icons";
+import { useState } from "react";
+import { Skeleton } from "@rneui/themed";
 
 const HistoryScreen = ({ navigation }) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const dataDummyCard = [
     {
       id: 1,
@@ -114,153 +118,171 @@ const HistoryScreen = ({ navigation }) => {
           paddingHorizontal: 25,
         }}
       >
-        {dataDummyCard
-          .slice()
-          .reverse()
-          .map((item, idx) => {
-            return (
-              <View key={idx} style={{ width: "100%", marginBottom: 20 }}>
-                <View
-                  style={{
-                    padding: 7,
-                    backgroundColor: "#D0DFED",
-                    borderTopLeftRadius: 10,
-                    borderTopRightRadius: 10,
-                    borderBottomLeftRadius: 5,
-                    borderBottomRightRadius: 5,
-                  }}
-                >
-                  <Text style={{ fontSize: 15, color: "#333333" }}>
-                    Kode Tiket
-                  </Text>
-                  <Text style={{ fontWeight: "bold", color: "#333333" }}>
-                    {item.code}
-                  </Text>
-                </View>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    paddingHorizontal: 15,
-                    paddingVertical: 10,
-                    borderWidth: 1,
-                    borderColor: "#A9E0FF",
-                    backgroundColor: "#fff",
-                    borderRadius: 13,
-                  }}
-                >
-                  <View style={{ flex: 1 }}>
-                    <Text style={{ fontSize: 15 }}>{item.date}</Text>
-                    <View style={{ flexWrap: "wrap", width: "75%" }}>
-                      <Text
+        {dataDummyCard.length === 0 ? (
+          <Text style={{ fontSize: 20, color: "#333333", textAlign: "center" }}>
+            Anda belum mempunyai histori izin keluar
+          </Text>
+        ) : (
+          dataDummyCard
+            .slice()
+            .reverse()
+            .map((item, idx) => {
+              return (
+                <View key={idx} style={{ width: "100%", marginBottom: 20 }}>
+                  {isLoading ? (
+                    <Skeleton style={{ borderRadius: 10 }} height={165}></Skeleton>
+                  ) : (
+                    <>
+                      <View
                         style={{
-                          fontWeight: "bold",
-                          fontSize: 20,
-                          color: "#333333",
+                          padding: 7,
+                          backgroundColor: "#D0DFED",
+                          borderTopLeftRadius: 10,
+                          borderTopRightRadius: 10,
+                          borderBottomLeftRadius: 5,
+                          borderBottomRightRadius: 5,
                         }}
                       >
-                        {item.title}
-                      </Text>
-                    </View>
-
-                    <View
-                      style={{
-                        padding: 7,
-                        marginTop: 10,
-                        flexDirection: "row",
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                    >
-                      <View
-                        style={{ flexDirection: "row", alignItems: "center" }}
-                      >
-                        <MaterialIcons
-                          name="directions-walk"
-                          size={30}
-                          color={"#333333"}
-                        />
-                        <Text
-                          style={{
-                            fontSize: 20,
-                            fontWeight: "bold",
-                            color: "#333333",
-                          }}
-                        >
-                          {item.timeOut}
+                        <Text style={{ fontSize: 15, color: "#333333" }}>
+                          Kode Tiket
+                        </Text>
+                        <Text style={{ fontWeight: "bold", color: "#333333" }}>
+                          {item.code}
                         </Text>
                       </View>
-                      <Text
-                        style={{
-                          fontSize: 20,
-                          marginHorizontal: "5%",
-                          fontWeight: "bold",
-                          color: "#333333",
-                        }}
-                      >
-                        -
-                      </Text>
                       <View
-                        style={{ flexDirection: "row", alignItems: "center" }}
-                      >
-                        <Text
-                          style={{
-                            fontSize: 20,
-                            fontWeight: "bold",
-                            color: "#333333",
-                          }}
-                        >
-                          {item.timeIn === null ? "?" : item.timeIn}
-                        </Text>
-                        {item.timeIn === null ? null : (
-                          <MaterialIcons
-                            name="directions-walk"
-                            size={30}
-                            color={"#333333"}
-                            style={{ transform: [{ rotateY: "180deg" }] }}
-                          />
-                        )}
-                      </View>
-                    </View>
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        gap: 10,
-                        justifyContent: "space-between",
-                      }}
-                    >
-                      {badgeText(item.category)}
-                      <TouchableOpacity
-                        onPress={() =>
-                          navigation.navigate("HistoryDetail", {
-                            codeTicket: item.code,
-                          })
-                        }
                         style={{
-                          flex: 1,
-                          borderRadius: 10,
+                          flexDirection: "row",
+                          justifyContent: "space-between",
+                          paddingHorizontal: 15,
+                          paddingVertical: 10,
                           borderWidth: 1,
-                          borderColor: "#053f5e",
-                          padding: 5,
+                          borderColor: "#A9E0FF",
+                          backgroundColor: "#fff",
+                          borderRadius: 13,
                         }}
                       >
-                        <Text
-                          style={{
-                            textAlign: "center",
-                            fontSize: 20,
-                            fontWeight: "bold",
-                            color: "#053f5e",
-                          }}
-                        >
-                          Lihat detail
-                        </Text>
-                      </TouchableOpacity>
-                    </View>
-                  </View>
+                        <View style={{ flex: 1 }}>
+                          <Text style={{ fontSize: 15 }}>{item.date}</Text>
+                          <View style={{ flexWrap: "wrap", width: "75%" }}>
+                            <Text
+                              style={{
+                                fontWeight: "bold",
+                                fontSize: 20,
+                                color: "#333333",
+                              }}
+                            >
+                              {item.title}
+                            </Text>
+                          </View>
+
+                          <View
+                            style={{
+                              padding: 7,
+                              marginTop: 10,
+                              flexDirection: "row",
+                              justifyContent: "center",
+                              alignItems: "center",
+                            }}
+                          >
+                            <View
+                              style={{
+                                flexDirection: "row",
+                                alignItems: "center",
+                              }}
+                            >
+                              <MaterialIcons
+                                name="directions-walk"
+                                size={30}
+                                color={"#333333"}
+                              />
+                              <Text
+                                style={{
+                                  fontSize: 20,
+                                  fontWeight: "bold",
+                                  color: "#333333",
+                                }}
+                              >
+                                {item.timeOut}
+                              </Text>
+                            </View>
+                            <Text
+                              style={{
+                                fontSize: 20,
+                                marginHorizontal: "5%",
+                                fontWeight: "bold",
+                                color: "#333333",
+                              }}
+                            >
+                              -
+                            </Text>
+                            <View
+                              style={{
+                                flexDirection: "row",
+                                alignItems: "center",
+                              }}
+                            >
+                              <Text
+                                style={{
+                                  fontSize: 20,
+                                  fontWeight: "bold",
+                                  color: "#333333",
+                                }}
+                              >
+                                {item.timeIn === null ? "?" : item.timeIn}
+                              </Text>
+                              {item.timeIn === null ? null : (
+                                <MaterialIcons
+                                  name="directions-walk"
+                                  size={30}
+                                  color={"#333333"}
+                                  style={{ transform: [{ rotateY: "180deg" }] }}
+                                />
+                              )}
+                            </View>
+                          </View>
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              gap: 10,
+                              justifyContent: "space-between",
+                            }}
+                          >
+                            {badgeText(item.category)}
+                            <TouchableOpacity
+                              onPress={() =>
+                                navigation.navigate("HistoryDetail", {
+                                  codeTicket: item.code,
+                                })
+                              }
+                              style={{
+                                flex: 1,
+                                borderRadius: 10,
+                                borderWidth: 1,
+                                borderColor: "#053f5e",
+                                padding: 5,
+                              }}
+                            >
+                              <Text
+                                style={{
+                                  textAlign: "center",
+                                  fontSize: 20,
+                                  fontWeight: "bold",
+                                  color: "#053f5e",
+                                }}
+                              >
+                                Lihat detail
+                              </Text>
+                            </TouchableOpacity>
+                          </View>
+                        </View>
+                      </View>
+                    </>
+                  )}
                 </View>
-              </View>
-            );
-          })}
+              );
+            })
+        )}
       </View>
     </ScrollView>
   );
