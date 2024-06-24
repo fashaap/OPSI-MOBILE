@@ -1,8 +1,12 @@
-import { View, TouchableOpacity, StyleSheet } from "react-native";
+import { View, TouchableOpacity, StyleSheet, Platform } from "react-native";
 import React from "react";
 import { AntDesign } from "@expo/vector-icons";
+import { Skeleton } from "@rneui/base";
+import { useState } from "react";
 
 const ButtonBottom = ({ state, descriptors, navigation }) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const buttons = [
     {
       name: "Home",
@@ -65,20 +69,18 @@ const ButtonBottom = ({ state, descriptors, navigation }) => {
             accessibilityState={isFocused ? { selected: true } : {}}
             accessibilityLabel={options.tabBarAccessibilityLabel}
             testID={options.tabBarTestID}
-            onPress={onPress}
+            onPress={isLoading ? null : onPress}
             onLongPress={onLongPress}
-            style={{
-              flex: 1,
-              borderTopWidth: isFocused ? 4 : 0,
-              borderTopColor: "#fff",
-              borderRadius: 2,
-              justifyContent: "center",
-              alignItems: "center",
-              padding: 20,
-              marginBottom: 20,
-            }}
+            style={[
+              Platform.OS === "ios" ? styles.buttonIOS : styles.buttonAndroid,
+              { borderTopWidth: isFocused ? 4 : 0 },
+            ]}
           >
-            <AntDesign name={buttons[index].icon} size={28} color="#ffffff" />
+            {isLoading ? (
+              <Skeleton width={50} height={50}></Skeleton>
+            ) : (
+              <AntDesign name={buttons[index].icon} size={28} color="#ffffff" />
+            )}
           </TouchableOpacity>
         );
       })}
@@ -88,6 +90,23 @@ const ButtonBottom = ({ state, descriptors, navigation }) => {
 
 const styles = StyleSheet.create({
   container: { flexDirection: "row", backgroundColor: "#0F5388" },
+  buttonIOS: {
+    flex: 1,
+    borderTopColor: "#fff",
+    borderRadius: 2,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+    marginBottom: 20,
+  },
+  buttonAndroid: {
+    flex: 1,
+    borderTopColor: "#fff",
+    borderRadius: 2,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+  },
 });
 
 export default ButtonBottom;
